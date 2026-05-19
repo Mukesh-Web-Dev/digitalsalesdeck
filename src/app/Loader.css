@@ -1,0 +1,127 @@
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap');
+
+.loader-container {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-container.fade-out {
+  pointer-events: none;
+}
+
+.loader_top {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 50vh;
+  background-color: var(--background);
+  transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: 0;
+}
+
+.loader_bottom {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50vh;
+  background-color: var(--background);
+  transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: 0;
+}
+
+.loader-container.fade-out .loader_top {
+  transform: translateY(-100%);
+}
+
+.loader-container.fade-out .loader_bottom {
+  transform: translateY(100%);
+}
+
+#loader {
+  width: 75%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10%;
+  position: relative;
+}
+
+#text {
+  font-family: "Satoshi", sans-serif;
+  color: var(--foreground);
+  font-size: 20px;
+  padding: 0 10px;
+  font-weight: 500;
+}
+
+#percent {
+  font-family: "Satoshi", sans-serif;
+  color: var(--foreground);
+  transition: all 90ms linear;
+  font-size: 16px;
+  padding: 0 10px;
+  font-weight: 500;
+}
+
+#bar {
+  position: absolute;
+  height: 40px;
+  width: 100%;
+  z-index: -1;
+  border-top: 4px solid #ff4d6d;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: all 90ms linear;
+}
+
+.start-button {
+  font-family: "Satoshi", sans-serif;
+  color: var(--foreground);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  cursor: pointer;
+  /* animation: float-vertical 2s ease-in-out infinite; */
+  /* transition: opacity 0.3s ease; */
+  position: relative;
+  z-index: 10;
+  transition: opacity 0.3s ease;
+}
+
+#loader {
+  z-index: 10;
+  transition: opacity 0.3s ease;
+}
+
+.loader-container.fade-out #loader,
+.loader-container.fade-out .start-button {
+  opacity: 0;
+}
+
+.start-button::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--foreground);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.start-button:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}

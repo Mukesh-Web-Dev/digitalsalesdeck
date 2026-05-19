@@ -3,6 +3,228 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --clip-full: polygon(0% 0%, 6.25% 0%, 6.25% 100%, 6.25% 100%, 6.25% 100%, 6.25% 0%, 12.5% 0%, 12.5% 100%, 12.5% 100%, 12.5% 0%, 18.75% 0%, 18.75% 100%, 18.75% 100%, 18.75% 0%, 25% 0%, 25% 100%, 25% 100%, 25% 0%, 31.25% 0%, 31.25% 100%, 31.25% 100%, 31.25% 0%, 37.5% 0%, 37.5% 100%, 37.5% 100%, 37.5% 0%, 43.75% 0%, 43.75% 100%, 43.75% 100%, 43.75% 0%, 50% 0%, 50% 100%, 50% 100%, 50% 0%, 56.25% 0%, 56.25% 100%, 56.25% 100%, 56.25% 0%, 62.5% 0%, 62.5% 100%, 62.5% 100%, 62.5% 0%, 68.75% 0%, 68.75% 100%, 68.75% 100%, 68.75% 0%, 75% 0%, 75% 100%, 75% 100%, 75% 0%, 81.25% 0%, 81.25% 100%, 81.25% 100%, 81.25% 0%, 87.5% 0%, 87.5% 100%, 87.5% 100%, 87.5% 0%, 93.75% 0%, 93.75% 100%, 93.75% 100%, 93.75% 0%, 100% 0%, 100% 100%, 0% 100%);
+  --clip-hidden: polygon(6.25% 0%, 6.25% 0%, 6.25% 100%, 6.25% 100%, 12.5% 100%, 12.5% 0%, 12.5% 0%, 12.5% 100%, 18.75% 100%, 18.75% 0%, 18.75% 0%, 18.75% 100%, 25% 100%, 25% 0%, 25% 0%, 25% 100%, 31.25% 100%, 31.25% 0%, 31.25% 0%, 31.25% 100%, 37.5% 100%, 37.5% 0%, 37.5% 0%, 37.5% 100%, 43.75% 100%, 43.75% 0%, 43.75% 0%, 43.75% 100%, 50% 100%, 50% 0%, 50% 0%, 50% 100%, 56.25% 100%, 56.25% 0%, 56.25% 0%, 56.25% 100%, 62.5% 100%, 62.5% 0%, 62.5% 0%, 62.5% 100%, 68.75% 100%, 68.75% 0%, 68.75% 0%, 68.75% 100%, 75% 100%, 75% 0%, 75% 0%, 75% 100%, 81.25% 100%, 81.25% 0%, 81.25% 0%, 81.25% 100%, 87.5% 100%, 87.5% 0%, 87.5% 0%, 87.5% 100%, 93.75% 100%, 93.75% 0%, 93.75% 0%, 93.75% 100%, 100% 100%, 100% 0%, 100% 0%, 100% 100%, 6.25% 100%);
+}
+
+.mux-player {
+  /* Force transparent background so WebGL gradient shows through letterbox areas */
+  background: transparent !important;
+
+  /* Hide all controls at once */
+  --controls: none;
+
+  /* Hide the error dialog */
+  --dialog: none;
+
+  /* Hide the loading indicator */
+  --loading-indicator: none;
+
+  /* Target all sections by excluding the section prefix */
+  --play-button: none;
+  --live-button: none;
+  --seek-backward-button: none;
+  --seek-forward-button: none;
+  --captions-button: none;
+  --airplay-button: none;
+  --pip-button: none;
+  --fullscreen-button: none;
+  --cast-button: none;
+  --playback-rate-button: none;
+  --volume-range: none;
+  --time-range: none;
+  --time-display: none;
+  --duration-display: none;
+  --rendition-menu-button: none;
+
+  /* Target a specific section by prefixing the CSS var with (top|center|bottom) */
+  --center-controls: none;
+  --bottom-play-button: none;
+}
+
+/* ==========================================================================
+   VIDEO CLICK FEEDBACK — YouTube-style icon pulse on click
+   ========================================================================== */
+
+.video-click-wrapper {
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.video-click-feedback {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 50;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, opacity;
+}
+
+.video-click-feedback svg {
+  width: 36px;
+  height: 36px;
+  fill: white;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+}
+
+.video-click-feedback.animate {
+  animation: videoClickPulse 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes videoClickPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 0;
+  }
+}
+
+
+.player-button {
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.scroll-div {
+  position: absolute;
+  bottom: 10vh;
+  left: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: nowrap;
+  object-position: initial;
+  object-fit: cover;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.explore-div {
+  color: rgb(255, 255, 255);
+  -webkit-font-smoothing: antialiased;
+}
+
+.explore-text-h2 {
+  margin-bottom: 2px;
+  font-size: .85rem;
+  font-weight: 400;
+  letter-spacing: 0px;
+  line-height: 1rem;
+  min-height: 1rem;
+}
+
+.explore-text-h3 {
+  margin-bottom: 1px;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0px;
+  line-height: 1rem;
+  min-height: 1rem;
+}
+
+.scroll-svg-div {
+  width: 10px;
+  height: 10px;
+  margin: 0px auto;
+  pointer-events: auto;
+  cursor: default;
+  color: rgb(72, 72, 72);
+  animation: float-vertical 2s ease-in-out infinite;
+}
+
+.player-controls {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  left: auto;
+  z-index: 30;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.player-controls div {
+  padding-right: 6px;
+}
+
+@keyframes float-vertical {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleDown {
+  0% {
+    transform: scale(30);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInOverlay {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.knockout-text {
+  animation: scaleDown 4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.knockout-overlay {
+  z-index: 3;
+  animation: fadeInOverlay 1.5s ease-in-out forwards;
 }
 
 @theme inline {
@@ -19,8 +241,428 @@
   }
 }
 
+/* ==========================================================================
+   SCROLLBAR HIDING — keeps scroll functional, hides the visual bar
+   ========================================================================== */
+html,
+body {
+  scrollbar-width: none !important;
+  /* Firefox */
+  -ms-overflow-style: none !important;
+  /* IE / legacy Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none !important;
+  /* Chrome, Safari, modern Edge */
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  /* Ensure scroll works even though bar is hidden */
+  max-width: 100vw;
 }
+
+/* ==========================================================================
+   GPU ACCELERATION & HARDWARE COMPOSITING
+   Forces browsers to promote animated elements to their own compositor layer,
+   achieving buttery smooth 60FPS on all devices.
+   ========================================================================== */
+
+.brand-showcase-wrapper,
+.knockout-overlay,
+.knockout-text,
+.showcase-image {
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  /* Force GPU compositing layer */
+}
+
+/* ==========================================================================
+   BRAND SHOWCASE SECTION (SECTION 3)
+   ========================================================================== */
+
+.brand-showcase-container {
+  position: relative;
+  z-index: 10;
+  background-color: transparent;
+  /* Allows hero to show behind it during scale animation */
+}
+
+.brand-showcase-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background-color: #ffffff;
+  overflow: hidden;
+  /* Important for rounded corners */
+  transform-origin: bottom center;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.promotion-showcase-container,
+.demographics-showcase-container {
+  width: 100%;
+  min-height: 100dvh;
+  background-color: transparent;
+  overflow: hidden;
+}
+
+.promotion-showcase-wrapper,
+.demographics-showcase-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background-color: #ffffff;
+  overflow: hidden;
+  transform-origin: bottom center;
+}
+
+.promotion-heading {
+  font-size: clamp(0.5rem, 2vw, 2rem);
+  line-height: 1.05;
+  max-width: 100%;
+  word-break: break-word;
+}
+
+.promotion-copy {
+  font-size: clamp(0.75rem, 1vw, 1rem);
+  max-width: 100%;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .promotion-showcase-wrapper {
+    padding: 0;
+  }
+
+  .promotion-heading {
+    font-size: clamp(1.2rem, 4vw, 2rem);
+  }
+
+  .promotion-copy {
+    font-size: clamp(0.7rem, 1vw, 0.95rem);
+  }
+}
+
+@media (min-width: 768px) {
+
+  .promotion-showcase-wrapper,
+  .demographics-showcase-wrapper {
+    flex-direction: row;
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+}
+
+.fade-overflow {
+  overflow: hidden;
+}
+
+.fade-el {
+  display: block;
+  transform: translateY(110%);
+}
+
+@media (min-width: 768px) {
+  .brand-showcase-wrapper {
+    flex-direction: row;
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
+  }
+}
+
+.showcase-left {
+  position: relative;
+  width: 100%;
+  height: 50dvh;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .showcase-left {
+    width: 50%;
+    height: 100%;
+    /* Stretch to match right column height */
+    min-height: 100dvh;
+  }
+}
+
+.showcase-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.opacity-100 {
+  opacity: 1;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.showcase-right {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .showcase-right {
+    width: 50%;
+    min-height: 100dvh;
+  }
+}
+
+/* TOP HALF - LIGHT THEME */
+.showcase-top-half {
+  flex: 1;
+  background-color: #c6b269;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 2rem;
+  overflow-y: auto;
+}
+
+@media (min-width: 768px) {
+  .showcase-top-half {
+    height: 50dvh;
+    padding: 2rem 4rem;
+  }
+}
+
+.showcase-heading-dark {
+  font-family: 'Satoshi', sans-serif;
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  /* Reduced slightly */
+  font-weight: 300;
+  color: #484848;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.showcase-promotion-dark {
+  font-family: 'Satoshi', sans-serif;
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  /* Reduced slightly */
+  font-weight: 300;
+  color: #484848;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.superscript {
+  font-size: 0.5em;
+  vertical-align: super;
+}
+
+.showcase-subtext-dark {
+  font-family: 'Satoshi', sans-serif;
+  font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+  font-weight: 400;
+  color: #f1f1f1;
+  line-height: 1.6;
+  max-width: 90%;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* BOTTOM HALF - DARK THEME */
+.showcase-bottom-half {
+  flex: 1;
+  background-color: #2E2A36;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 2rem;
+  overflow-y: auto;
+}
+
+@media (min-width: 768px) {
+  .showcase-bottom-half {
+    height: 50dvh;
+    padding: 2rem 4rem;
+  }
+}
+
+.showcase-heading-light {
+  font-family: 'Satoshi', sans-serif;
+  font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+  font-weight: 500;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.showcase-subheading-light {
+  font-family: 'Satoshi', sans-serif;
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
+  font-weight: 400;
+  color: #e3e3e3;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.showcase-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: 'Satoshi', sans-serif;
+}
+
+.showcase-list li {
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  font-weight: 300;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+/* Right-side thin scroll progress indicator */
+.scroll-progress-outer {
+  position: fixed;
+  right: 18px;
+  top: 6vh;
+  bottom: 6vh;
+  width: 14px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.scroll-progress-outer.hidden {
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+
+.scroll-progress-outer.visible {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+
+.scroll-progress-track {
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+}
+
+.scroll-progress-fill {
+  width: 100%;
+  background: linear-gradient(180deg, #e6e6e6, #bfbfbf);
+  border-radius: 2px;
+  transform-origin: top center;
+  transition: height 120ms linear;
+}
+
+/* ==========================================================================
+   ALTERNATE LETTERS FLIPPING HOVER TRANSITIONS
+   Luxury-branded hardware-accelerated text animation driven by SplitFlipText
+   ========================================================================== */
+
+.split-flip-text {
+  display: inline;
+}
+
+.split-flip-word {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  pointer-events: auto;
+  will-change: transform;
+}
+
+.split-flip-word:hover {
+  z-index: 10;
+}
+
+.split-flip-before {
+  display: inline-block;
+  position: relative;
+  pointer-events: none;
+}
+
+.split-flip-after {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.split-flip-char {
+  display: inline-block;
+  transition: transform 0.33s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Original letters layout at normal Y=0 */
+.split-flip-before .split-flip-char {
+  transform: translateY(0);
+}
+
+/* Duplicate letters slide in from top/bottom off-screen */
+.split-flip-after .split-flip-char {
+  transform: translateY(-100%);
+}
+
+.split-flip-after .split-flip-char:nth-child(even) {
+  transform: translateY(100%);
+}
+
+/* Hover transitions: odd elements translate down, even elements translate up */
+.split-flip-word:hover .split-flip-before .split-flip-char {
+  transform: translateY(100%);
+}
+
+.split-flip-word:hover .split-flip-before .split-flip-char:nth-child(even) {
+  transform: translateY(-100%);
+}
+
+.split-flip-word:hover .split-flip-after .split-flip-char {
+  transform: translateY(0);
+}
+
+.split-flip-space {
+  display: inline;
+}
+
+
