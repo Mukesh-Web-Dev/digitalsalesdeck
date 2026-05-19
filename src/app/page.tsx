@@ -10,6 +10,7 @@ import TextKnockout from "../components/TextKnockout";
 import PlayerControls from "../components/PlayerControls";
 import ScrollIndicator from "../components/ScrollIndicator";
 import ScrollToTop from "../components/ScrollToTop";
+import InteractiveController from "../components/InteractiveController";
 
 import BrandShowcase from "../components/BrandShowcase";
 const ShoppingSection = dynamic(() => import("../components/ShoppingSection"), {

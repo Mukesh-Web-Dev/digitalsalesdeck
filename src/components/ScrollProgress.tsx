@@ -2,6 +2,19 @@
 
 import { useEffect, useState, useRef } from "react";
 
+/**
+ * ScrollProgress Component
+ * 
+ * Implements a premium, sleek, silver-toned vertical scroll indicator bar 
+ * positioned fixed along the right side of the window viewport.
+ * 
+ * Key behaviors:
+ * 1. Progress Calculation: Calculates the exact scroll percentage based on viewport offset vs scroll height.
+ * 2. Responsive Visibility: Dynamically hides itself on the Hero/Landing section, fading in with a smooth opacity
+ *    transition only once the user scrolls past 60% of the Hero's height.
+ * 3. High Performance: Uses RequestAnimationFrame (RAF) to throttle scroll calculations, ensuring buttery-smooth
+ *    rendering without layout thrashing.
+ */
 export default function ScrollProgress() {
   const [progress, setProgress] = useState(0);
   const [visible, setVisible] = useState(false);

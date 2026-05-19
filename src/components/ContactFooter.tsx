@@ -180,6 +180,17 @@ export default function ContactFooter() {
     let previousMouseX = 0;
     let previousMouseY = 0;
 
+    const updateModelPosition = () => {
+      if (!model) return;
+      if (window.innerWidth < 768) {
+        model.position.set(0, 1.3, 0); // Centered and elevated on mobile/tablet
+        model.scale.set(0.07, 0.07, 0.07);
+      } else {
+        model.position.set(2.5, 1, 0); // Offset to the right on desktop
+        model.scale.set(0.1, 0.1, 0.1);
+      }
+    };
+
     const loader = new GLTFLoader();
     loader.load("/model/star.glb", (gltf) => {
       model = gltf.scene;
@@ -205,9 +216,8 @@ export default function ContactFooter() {
       });
 
       model.rotation.x = targetRotationX;
-      model.position.set(2.5, 1, 0);
-      model.scale.set(0.1, 0.1, 0.1); // Reduce scale by 50%
       scene.add(model);
+      updateModelPosition();
     });
 
     // Custom Professional Interaction (Scroll Safe)
@@ -259,6 +269,7 @@ export default function ContactFooter() {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
+      updateModelPosition();
     };
     window.addEventListener("resize", handleResize);
 
@@ -337,11 +348,11 @@ export default function ContactFooter() {
 
       <div
         id="contact-cursor"
-        className="pointer-events-none fixed z-50 h-3 w-3 rounded-full bg-white transition-opacity duration-200"
+        className="pointer-events-none fixed z-50 h-3 w-3 rounded-full bg-white transition-opacity duration-200 hidden md:block"
       />
       <div
         id="contact-cursor-ring"
-        className="pointer-events-none fixed z-50 h-12 w-12 rounded-full border border-white/40 transition-opacity duration-200"
+        className="pointer-events-none fixed z-50 h-12 w-12 rounded-full border border-white/40 transition-opacity duration-200 hidden md:block"
       />
 
       <div className="relative z-20 mx-auto flex w-full max-w-4xl flex-col justify-center px-6 md:px-12 text-center pointer-events-none">
@@ -352,7 +363,7 @@ export default function ContactFooter() {
           Mall of America Partnerships
         </h2>
 
-        <div className="space-y-6 md:space-y-10 text-left text-sm md:text-base flex flex-row justify-space-between gap-8 leading-relaxed md:leading-8 text-[#eee8de]/90">
+        <div className="space-y-6 md:space-y-0 text-center md:text-left text-sm md:text-base flex flex-col md:flex-row justify-between gap-6 md:gap-8 leading-relaxed md:leading-8 text-[#eee8de]/90">
           {contacts.map((contact, idx) => (
             <div key={idx} className="mb-0">
               <p className="font-semibold text-white">{contact.name}</p>

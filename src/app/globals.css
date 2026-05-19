@@ -665,4 +665,264 @@ body {
   display: inline;
 }
 
+/* ==========================================================================
+   GLOBAL RESPONSIVE SYSTEM OVERRIDES
+   Engineered to support:
+   1. Massive Screens & TV Displays (32" to 86"+, 4K Projectors)
+   2. PC Desktop / Ultrawides (19" to 49"+)
+   3. Laptop Screens (13" to 16")
+   4. Tablet viewports (7" to 14.6")
+   5. Smartphone screens (Compact/Mini, Standard, Pro Max, Foldables)
+   ========================================================================== */
+
+/* --- 1. Root Typography & Spacing Scaling for Massive Displays & TVs --- */
+@media (min-width: 1440px) {
+  :root {
+    --font-scale-base: 16px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --font-scale-base: 18px;
+  }
+  
+  .brand-showcase-wrapper,
+  .demographics-showcase-wrapper,
+  .promotion-showcase-wrapper,
+  #bento-showcase > div,
+  #entertainment-showcase > div,
+  #venue-showcase > div,
+  #promotion-showcase > div {
+    max-width: 2560px !important;
+    margin: 0 auto !important;
+  }
+}
+
+@media (min-width: 2560px) {
+  :root {
+    --font-scale-base: 21px; /* TV screen size (32"-55") and high-res PC monitors */
+  }
+}
+
+@media (min-width: 3840px) {
+  :root {
+    --font-scale-base: 25px; /* Massive 4K/8K TVs (65"-86"+) and large project screens */
+  }
+}
+
+/* Apply root base scaling if variables are parsed by the browser */
+:root {
+  font-size: var(--font-scale-base, 16px);
+}
+
+/* --- 2. Side-by-Side Showcase Mobile Optimization (< 768px) --- */
+@media (max-width: 767px) {
+  .showcase-left {
+    height: 30dvh !important;
+    width: 100% !important;
+  }
+  
+  .showcase-right {
+    height: 70dvh !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  .showcase-top-half {
+    height: 35dvh !important;
+    padding: 1.25rem 1.5rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    overflow-y: auto !important;
+  }
+  
+  .showcase-bottom-half {
+    height: 35dvh !important;
+    padding: 1.25rem 1.5rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    overflow-y: auto !important;
+  }
+
+  .showcase-heading-dark {
+    font-size: clamp(1.2rem, 5vw, 1.8rem) !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .showcase-subtext-dark {
+    font-size: clamp(0.72rem, 3.2vw, 0.88rem) !important;
+    line-height: 1.35 !important;
+    max-width: 100% !important;
+  }
+
+  .showcase-heading-light {
+    font-size: clamp(1.1rem, 4.5vw, 1.5rem) !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .showcase-subheading-light {
+    font-size: clamp(0.72rem, 3.2vw, 0.88rem) !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .showcase-list li {
+    font-size: clamp(0.7rem, 2.8vw, 0.82rem) !important;
+    margin-bottom: 0.4rem !important;
+    line-height: 1.25 !important;
+  }
+}
+
+/* --- 3. Bento Grid Mobile Layout (2-Column, 3-Row Compact Grid) --- */
+@media (max-width: 767px) {
+  #bento-showcase > div,
+  #entertainment-showcase > div,
+  #venue-showcase > div,
+  #promotion-showcase > div {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(3, minmax(0, 1fr)) !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+  }
+
+  /* Block 1 (Top Left Stats) -> grid coordinate Col 1, Row 1 */
+  #bento-showcase > div > div:nth-child(1),
+  #entertainment-showcase > div > div:nth-child(1),
+  #venue-showcase > div > div:nth-child(1),
+  #promotion-showcase > div > div:nth-child(1) {
+    grid-column-start: 1 !important;
+    grid-row-start: 1 !important;
+    height: 100% !important;
+    padding: 1.25rem 1rem !important;
+  }
+
+  /* Block 3 (Top Middle Stats) -> grid coordinate Col 2, Row 1 */
+  #bento-showcase > div > div:nth-child(3),
+  #entertainment-showcase > div > div:nth-child(3),
+  #venue-showcase > div > div:nth-child(3),
+  #promotion-showcase > div > div:nth-child(3) {
+    grid-column-start: 2 !important;
+    grid-row-start: 1 !important;
+    height: 100% !important;
+    padding: 1.25rem 1rem !important;
+  }
+
+  /* Block 4 (Bottom Middle Stats) -> grid coordinate Col 1, Row 2 */
+  #bento-showcase > div > div:nth-child(4),
+  #entertainment-showcase > div > div:nth-child(4),
+  #venue-showcase > div > div:nth-child(4),
+  #promotion-showcase > div > div:nth-child(4) {
+    grid-column-start: 1 !important;
+    grid-row-start: 2 !important;
+    height: 100% !important;
+    padding: 1.25rem 1rem !important;
+  }
+
+  /* Block 2 (Slideshow 1) -> grid coordinate Col 2, Row 2 */
+  #bento-showcase > div > div:nth-child(2),
+  #entertainment-showcase > div > div:nth-child(2),
+  #venue-showcase > div > div:nth-child(2),
+  #promotion-showcase > div > div:nth-child(2) {
+    grid-column-start: 2 !important;
+    grid-row-start: 2 !important;
+    height: 100% !important;
+  }
+
+  /* Block 5 (Full Height Slideshow) -> grid coordinate Col span 2, Row 3 */
+  #bento-showcase > div > div:nth-child(5),
+  #entertainment-showcase > div > div:nth-child(5),
+  #venue-showcase > div > div:nth-child(5),
+  #promotion-showcase > div > div:nth-child(5) {
+    grid-column: span 2 / span 2 !important;
+    grid-column-start: 1 !important;
+    grid-row-start: 3 !important;
+    height: 100% !important;
+  }
+
+  /* Text size limits inside mobile bento cells */
+  #bento-showcase h2,
+  #bento-showcase h3,
+  #entertainment-showcase h2,
+  #entertainment-showcase h3,
+  #venue-showcase h2,
+  #venue-showcase h3,
+  #promotion-showcase h2,
+  #promotion-showcase h3 {
+    font-size: clamp(1.1rem, 5vw, 2.1rem) !important;
+    margin-bottom: 0.2rem !important;
+    line-height: 1.15 !important;
+  }
+
+  #bento-showcase p,
+  #entertainment-showcase p,
+  #venue-showcase p,
+  #promotion-showcase p {
+    font-size: clamp(0.68rem, 2.7vw, 0.88rem) !important;
+    line-height: 1.3 !important;
+  }
+
+  #bento-showcase ul,
+  #entertainment-showcase ul,
+  #venue-showcase ul,
+  #promotion-showcase ul {
+    font-size: clamp(0.66rem, 2.6vw, 0.86rem) !important;
+  }
+
+  #bento-showcase li,
+  #entertainment-showcase li,
+  #venue-showcase li,
+  #promotion-showcase li {
+    margin-bottom: 0.15rem !important;
+    line-height: 1.2 !important;
+  }
+
+  #bento-showcase div.w-12,
+  #entertainment-showcase div.w-12,
+  #venue-showcase div.w-12,
+  #promotion-showcase div.w-12 {
+    margin-top: 0.3rem !important;
+    margin-bottom: 0.3rem !important;
+    height: 1px !important;
+  }
+}
+
+/* --- 4. Knockout Title Scaling for Smartphones & Foldables --- */
+@media (max-width: 480px) {
+  .knockout-text {
+    font-size: 6.2vw !important; /* Scale text down on small screens to prevent clipping */
+    letter-spacing: 2px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .knockout-text {
+    font-size: 5.2vw !important; /* Extra scale down for small compacts & folded devices */
+    letter-spacing: 1px !important;
+  }
+}
+
+/* --- 5. Brand Name Layout Scaling for Compact viewports --- */
+@media (max-width: 480px) {
+  .brand-name {
+    top: 12px !important;
+    left: 12px !important;
+  }
+  .brand-name span {
+    font-size: 0.72rem !important;
+    letter-spacing: 0.05em !important;
+  }
+  .brand-name svg {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .brand-name > span:first-of-type {
+    width: 32px !important;
+    height: 32px !important;
+  }
+}
+
 
