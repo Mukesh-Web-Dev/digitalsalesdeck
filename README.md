@@ -1,5 +1,5 @@
 # Mall of America — DigiSalesDeck
-> **A Cinematic, Scroll-Driven Luxury Sales Presentation Deck**
+> **A Cinematic, Scroll-Driven Luxury Sales Presentation Deck. (https://digitalsalesdeck.vercel.app/) **
 >
 > Built for **90+ Google Lighthouse scores**, delivering buttery smooth 60FPS transitions, custom WebGL graphics, and responsive luxury-brand typography scaling across all screen sizes (from compact smartphones up to 86" 4K boardroom smart TVs).
 
