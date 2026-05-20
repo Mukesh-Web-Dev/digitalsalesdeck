@@ -96,6 +96,7 @@ export default function HeroVideo({
         }}
         fullscreenElement="true"
         playbackId="01FdU8MUK01L027RJuoA7pZoOsZ54Y01C9X4Hu1kEKTzl8M"
+        poster="https://image.mux.com/01FdU8MUK01L027RJuoA7pZoOsZ54Y01C9X4Hu1kEKTzl8M/thumbnail.webp?width=1280"
         metadata={{
           video_id: "qm8G9xRo02lMiYHZ4Bjk2D00p9YqjWbk01s55AHA3u8A7U",
           video_title: "Intro-MOA",

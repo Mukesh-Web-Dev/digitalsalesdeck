@@ -39,12 +39,27 @@ export default function AutoSlideshow({
 
   if (images.length === 0) return null;
 
+  /**
+   * CDN Image Optimization Helper
+   * Directs the ImageKit CDN to return a high-compression optimized asset (q-70),
+   * drastically lowering the initial payload before client-side hydration.
+   */
+  const getOptimizedUrl = (url: string) => {
+    if (!url) return url;
+    if (url.includes("imagekit.io")) {
+      const separator = url.includes("?") ? "&" : "?";
+      // Apply quality 70 and auto-format conversions
+      return `${url}${separator}tr=q-70,f-auto`;
+    }
+    return url;
+  };
+
   return (
     <div className="relative w-full h-full bg-neutral-900 overflow-hidden">
       {images.map((src, index) => (
         <Image
           key={src}
-          src={src}
+          src={getOptimizedUrl(src)}
           alt={`Slideshow image ${index + 1}`}
           fill
           className={`absolute inset-0 object-cover transition-opacity duration-1000 ${
@@ -52,6 +67,7 @@ export default function AutoSlideshow({
           }`}
           sizes={sizes}
           loading="lazy"
+          quality={70} // Prevents high overhead in Next.js internal image caches
           onError={() => {
             // Remove broken image from array to preserve layout flow
             setImages((prev) => prev.filter((img) => img !== src));

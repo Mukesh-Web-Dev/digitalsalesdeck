@@ -84,6 +84,7 @@ export default function VideoSection({
           loop
           preload="metadata"
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          poster={`https://image.mux.com/${playbackId}/thumbnail.webp?width=1080`}
           metadata={{
             video_id: metadata.video_id,
             video_title: metadata.video_title,

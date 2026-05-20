@@ -144,6 +144,18 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="preconnect" href="https://image.mux.com" />
+        <link rel="preconnect" href="https://inferred.litix.io" />
+        <link rel="preconnect" href="https://ik.imagekit.io" />
+        <link
+          rel="preload"
+          href="https://image.mux.com/01FdU8MUK01L027RJuoA7pZoOsZ54Y01C9X4Hu1kEKTzl8M/thumbnail.webp?width=1280"
+          as="image"
+          fetchPriority="high"
+          type="image/webp"
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         <GlobalAudioProvider>
           {children}
