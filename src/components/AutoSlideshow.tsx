@@ -13,27 +13,14 @@ interface AutoSlideshowProps {
 }
 
 /**
+ * AutoSlideshow Component
+ *
  * Reusable cross-fade image carousel used across all Showcase sections.
  * Features an onError failsafe that removes broken images from the array
  * so the layout never breaks on a failed CDN request.
  *
  * Used by: BentoShowcase, EntertainmentShowcase, VenueSpacesShowcase, PromotionShowcase
  */
-
-/**
- * Custom ImageKit Loader for Next.js Image component.
- * Directs the browser to fetch pre-resized, highly compressed WebP/AVIF images
- * straight from the ImageKit edge network, bypassing Vercel serverless functions.
- */
-const imageKitLoader = ({ src, width, quality }: { src: string; width: number; quality?: number }) => {
-  if (!src) return "";
-  if (src.includes("imagekit.io")) {
-    const separator = src.includes("?") ? "&" : "?";
-    return `${src}${separator}tr=w-${width},q-${quality || 70},f-auto`;
-  }
-  return src;
-};
-
 export default function AutoSlideshow({
   initialImages,
   delay = 3000,
@@ -52,13 +39,27 @@ export default function AutoSlideshow({
 
   if (images.length === 0) return null;
 
+  /**
+   * CDN Image Optimization Helper
+   * Directs the ImageKit CDN to return a high-compression optimized asset (q-70),
+   * drastically lowering the initial payload before client-side hydration.
+   */
+  const getOptimizedUrl = (url: string) => {
+    if (!url) return url;
+    if (url.includes("imagekit.io")) {
+      const separator = url.includes("?") ? "&" : "?";
+      // Apply quality 70 and auto-format conversions
+      return `${url}${separator}tr=q-70,f-auto`;
+    }
+    return url;
+  };
+
   return (
     <div className="relative w-full h-full bg-neutral-900 overflow-hidden">
       {images.map((src, index) => (
         <Image
           key={src}
-          loader={imageKitLoader}
-          src={src}
+          src={getOptimizedUrl(src)}
           alt={`Slideshow image ${index + 1}`}
           fill
           className={`absolute inset-0 object-cover transition-opacity duration-1000 ${
@@ -66,7 +67,7 @@ export default function AutoSlideshow({
           }`}
           sizes={sizes}
           loading="lazy"
-          quality={70} // Directs the loader with quality 70
+          quality={70} // Prevents high overhead in Next.js internal image caches
           onError={() => {
             // Remove broken image from array to preserve layout flow
             setImages((prev) => prev.filter((img) => img !== src));

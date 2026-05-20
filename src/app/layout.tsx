@@ -150,10 +150,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://ik.imagekit.io" />
         <link
           rel="preload"
-          as="image"
           href="https://image.mux.com/01FdU8MUK01L027RJuoA7pZoOsZ54Y01C9X4Hu1kEKTzl8M/thumbnail.webp?width=1280"
-          imageSrcSet="https://image.mux.com/01FdU8MUK01L027RJuoA7pZoOsZ54Y01C9X4Hu1kEKTzl8M/thumbnail.webp?width=640 640w, https://image.mux.com/01FdU8MUK01L027RJuoA7pZoOsZ54Y01C9X4Hu1kEKTzl8M/thumbnail.webp?width=1280 1280w"
-          imageSizes="(max-width: 768px) 100vw, 1280px"
+          as="image"
           fetchPriority="high"
           type="image/webp"
         />

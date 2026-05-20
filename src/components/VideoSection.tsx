@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import type MuxPlayerElement from "@mux/mux-player";
 import MuxPlayer from "@mux/mux-player-react";
 import { useGlobalAudio } from "../app/GlobalAudioContext";
@@ -57,15 +57,6 @@ export default function VideoSection({
 
   const [showKnockout, setShowKnockout] = useState(false);
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
-  const [posterWidth, setPosterWidth] = useState(1080);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (window.innerWidth < 768) {
-        setPosterWidth(640);
-      }
-    }
-  }, []);
 
   // Optional click-to-pause — only used when enableClickToggle is true
   const { handleClick, isPausedByUser } = useVideoClickToggle(playerRef);
@@ -93,7 +84,7 @@ export default function VideoSection({
           loop
           preload="metadata"
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          poster={`https://image.mux.com/${playbackId}/thumbnail.webp?width=${posterWidth}`}
+          poster={`https://image.mux.com/${playbackId}/thumbnail.webp?width=1080`}
           metadata={{
             video_id: metadata.video_id,
             video_title: metadata.video_title,
